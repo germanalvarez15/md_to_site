@@ -15,7 +15,7 @@ pub struct Config{
     #[arg(short, long, value_name = "Path")]
     pub output: PathBuf,
 
-    #[arg(short, long, value_name = "RUTA")]
+    #[arg(short, long, value_name = "Path")]
     pub template: Option<PathBuf>,
 }
 fn main() {

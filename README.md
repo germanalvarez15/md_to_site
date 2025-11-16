@@ -41,7 +41,7 @@ Or using the compiled binary:
 
 - `-m, --markdown <Path>`: Path to the input Markdown file (required)
 - `-o, --output <Path>`: Directory where the HTML file will be generated (required)
-- `-t, --template <RUTA>`: Optional path to a custom Tera template directory
+- `-t, --template <Path>`: Optional path to a custom Tera template directory
 
 ### Examples
 
