@@ -1,0 +1,19 @@
+[package]
+name = "md_to_site"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# CLI
+clap = { version = "4.0", features = ["derive"] }
+
+# Markdown Parsing
+pulldown-cmark = "0.9"
+
+# Templating
+tera = "1.19"
+
+# Error Handling & Utilities
+anyhow = "1.0"
+log = "0.4"
+env_logger = "0.10"
