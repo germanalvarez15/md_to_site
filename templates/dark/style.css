@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    color: #e0e0e0;
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+article {
+    background: rgba(30, 30, 30, 0.8);
+    padding: 3rem;
+    border-radius: 10px;
+    border: 1px solid #404040;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: #61dafb;
+    background: linear-gradient(90deg, #61dafb 0%, #bb86fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 2.2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #bb86fc;
+    border-bottom: 2px solid #404040;
+    padding-bottom: 0.5rem;
+}
+
+h3 {
+    font-size: 1.7rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: #03dac6;
+}
+
+p {
+    margin-bottom: 1.2rem;
+    color: #d0d0d0;
+}
+
+code {
+    background: #1a1a1a;
+    color: #61dafb;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+    border: 1px solid #333;
+}
+
+pre {
+    background: #0d1117;
+    color: #c9d1d9;
+    padding: 1.5rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border: 1px solid #30363d;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: inherit;
+}
+
+a {
+    color: #61dafb;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+a:hover {
+    border-bottom-color: #61dafb;
+}
+
+ul, ol {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+    color: #d0d0d0;
+}
+
+blockquote {
+    border-left: 4px solid #bb86fc;
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    color: #b0b0b0;
+    font-style: italic;
+    background: rgba(187, 134, 252, 0.05);
+    padding: 1rem 1rem 1rem 1.5rem;
+    border-radius: 0 4px 4px 0;
+}
+
+strong {
+    font-weight: 600;
+    color: #fff;
+}
+
+em {
+    font-style: italic;
+    color: #c0c0c0;
+}

@@ -41,18 +41,26 @@ Or using the compiled binary:
 
 - `-m, --markdown <Path>`: Path to the input Markdown file (required)
 - `-o, --output <Path>`: Directory where the HTML file will be generated (required)
-- `-t, --template <Path>`: Optional path to a custom Tera template directory
+- `-t, --template <Path>`: Optional path to a custom Tera template file
+- `--theme <Theme>`: Choose a pre-defined theme (default: "default")
 
 ### Examples
 
-**Using default template:**
+**Using default theme:**
 ```bash
 cargo run -- --markdown /path/to/document.md --output /path/to/output
 ```
 
-**Using custom template:**
+**Using a specific theme:**
 ```bash
-cargo run -- --markdown document.md --output ./public --template ./templates/
+cargo run -- --markdown document.md --output ./public --theme dark
+cargo run -- --markdown document.md --output ./public --theme minimal
+cargo run -- --markdown document.md --output ./public --theme blog
+```
+
+**Using custom template (overrides theme):**
+```bash
+cargo run -- --markdown document.md --output ./public --template ./my-template.html
 ```
 
 ## How It Works
@@ -71,13 +79,28 @@ md_to_site/
 ├── README.md               # This file
 ├── example.md              # Example Markdown file
 ├── public/                 # Output directory for generated HTML
-│   └── default.html        # Generated HTML file
+│   ├── default.html        # Generated HTML file
+│   └── style.css           # Theme CSS file (copied automatically)
+├── templates/              # Pre-defined themes
+│   ├── default/
+│   │   ├── template.html
+│   │   └── style.css
+│   ├── minimal/
+│   │   ├── template.html
+│   │   └── style.css
+│   ├── dark/
+│   │   ├── template.html
+│   │   └── style.css
+│   └── blog/
+│       ├── template.html
+│       └── style.css
 └── src/
     ├── main.rs             # Entry point and CLI configuration
     └── mods/
         ├── mod.rs          # Module declarations
         ├── file_manager.rs # File I/O and Markdown conversion
-        └── html_generator.rs # Template rendering
+        ├── html_generator.rs # Template rendering
+        └── theme_manager.rs  # Theme loading and management
 ```
 
 ### Modules
@@ -89,13 +112,38 @@ md_to_site/
 #### `html_generator`
 - `generate_html()`: Renders HTML using Tera templates with title and content
 
-### Default Template
+#### `theme_manager`
+- `get_theme()`: Loads a theme by name and returns template and CSS paths
+- `list_available_themes()`: Lists all available themes in the templates directory
 
-The tool includes a built-in HTML5 template with:
-- Responsive viewport meta tag
-- UTF-8 character encoding
-- Dynamic title injection
-- Content placeholder for rendered Markdown
+## Available Themes
+
+The tool comes with 4 pre-defined themes:
+
+### 1. **default** (default)
+Clean, professional design with a white content card on a light gray background. Includes syntax highlighting for code blocks.
+
+### 2. **minimal**
+Simplistic design with serif typography and minimal styling. Perfect for distraction-free reading.
+
+### 3. **dark**
+Modern dark theme with gradient accents, neon colors, and a sophisticated dark background. Great for technical documentation.
+
+### 4. **blog**
+Full blog-style layout with header, navigation menu, and footer. Includes gradient header styling and professional typography.
+
+Each theme includes:
+- Responsive design with mobile support
+- Proper typography and spacing
+- Syntax-highlighted code blocks
+- Styled headings, lists, blockquotes, and links
+
+### Custom Templates
+
+You can also create your own templates using Tera syntax. Templates should include:
+- `{{ title }}` placeholder for the page title
+- `{{ content }}` placeholder for the rendered Markdown content
+- A `<link>` tag to reference the CSS file
 
 ## Dependencies
 
@@ -107,11 +155,16 @@ The tool includes a built-in HTML5 template with:
 
 ## Output
 
-The generated HTML file (`default.html`) includes:
+The tool generates:
+1. **HTML file** (`default.html`): Contains your converted Markdown with proper HTML5 structure
+2. **CSS file** (`style.css`): Automatically copied from the selected theme
+
+Features of generated HTML:
 - Proper HTML5 structure
-- Your Markdown content converted to semantic HTML
+- Semantic HTML from Markdown conversion
+- Linked stylesheet for styling
 - Support for code blocks with syntax highlighting classes
-- Properly formatted headings, paragraphs, lists, and more
+- Properly formatted headings, paragraphs, lists, blockquotes, and more
 
 ## Use Cases
 
@@ -133,12 +186,14 @@ Contributions are welcome! Feel free to:
 
 Potential features for future versions:
 - Multiple file processing (batch conversion)
-- CSS styling options
-- Syntax highlighting integration
+- Additional pre-defined themes
+- Syntax highlighting integration (e.g., highlight.js)
 - Live preview server
 - Watch mode for automatic regeneration
-- Custom metadata extraction from frontmatter
+- Custom metadata extraction from HTML comments in Markdown
 - Table of contents generation
+- Custom CSS file support via command-line argument
+- Theme customization options
 
 ---
 
