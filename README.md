@@ -1,8 +1,14 @@
 # Markdown to Site
 
-A lightweight command-line tool written in Rust that converts Markdown files into static HTML pages. Perfect for quickly generating simple websites from Markdown documentation.
+A comprehensive Rust-based toolset for working with Markdown files - includes both a CLI converter and a live desktop editor with real-time preview.
 
-> **Note**: This is a learning project created to explore Rust's ecosystem, including CLI argument parsing, file I/O, Markdown processing, and template rendering. It serves as a practical example of building a functional tool while learning Rust fundamentals.
+> **Note**: This is a learning project created to explore Rust's ecosystem, including CLI argument parsing, file I/O, Markdown processing, template rendering, and desktop GUI development with Dioxus. It serves as a practical example of building functional tools while learning Rust fundamentals.
+
+## Features
+
+✨ **Two Usage Modes:**
+1. **CLI Tool** - Convert Markdown files to static HTML with pre-defined themes
+2. **Live Editor** - Desktop app with split-pane editor and real-time preview
 
 ## Installation
 
@@ -19,13 +25,15 @@ cd md_to_site
 cargo build --release
 ```
 
-The compiled binary will be available at `target/release/md_to_site`.
+The compiled binaries will be available at:
+- `target/release/md_to_site` (CLI tool)
+- `target/release/editor` (Live editor)
 
 ## Usage
 
-### Basic Usage
+### Mode 1: CLI Converter
 
-Convert a Markdown file to HTML using the default template:
+Convert a Markdown file to HTML using the command-line tool:
 
 ```bash
 cargo run -- --markdown example.md --output ./public
@@ -35,14 +43,14 @@ Or using the compiled binary:
 
 ```bash
 ./md_to_site --markdown example.md --output ./public
-```
-
-### Command-Line Arguments
+#### Command-Line Arguments
 
 - `-m, --markdown <Path>`: Path to the input Markdown file (required)
 - `-o, --output <Path>`: Directory where the HTML file will be generated (required)
 - `-t, --template <Path>`: Optional path to a custom Tera template file
 - `--theme <Theme>`: Choose a pre-defined theme (default: "default")
+
+#### CLI ExamplesTheme>`: Choose a pre-defined theme (default: "default")
 
 ### Examples
 
@@ -63,21 +71,53 @@ cargo run -- --markdown document.md --output ./public --theme blog
 cargo run -- --markdown document.md --output ./public --template ./my-template.html
 ```
 
-## How It Works
-
-The tool follows a simple three-step process:
+### CLI Tool Process
 
 1. **Read**: Reads the Markdown file from the specified path
 2. **Convert**: Parses Markdown to HTML using `pulldown-cmark`
 3. **Generate**: Wraps the HTML content in a template and writes to the output directory
 
-### Project Structure
+### Live Editor Process
 
+1. **Input**: User types Markdown in the left pane
+2. **Reactive Conversion**: Text changes trigger instant HTML conversion
+3. **Theme Application**: Selected theme CSS is applied to the preview
+4. **Isolated Rendering**: Preview renders in an iframe with complete HTML document
+
+Or using the compiled binary:
+
+```bash
+./editor
+```
+
+#### Live Editor Features
+
+- **Split-Pane Interface**: Editor on the left, live preview on the right
+- **Real-Time Preview**: See HTML output instantly as you type
+- **Theme Switching**: Change themes on-the-fly with dropdown selector
+- **Isolated Preview**: Themes only affect the preview, not the editor interface
+- **Dark Editor Theme**: Comfortable dark-themed editor with syntax-aware styling
+- **Desktop App**: Native window using Dioxus framework
+
+The editor window provides:
+- Markdown editor with dark theme (left pane)
+- Live HTML preview with selected theme (right pane)
+- Theme selector dropdown to switch between available themes
+- Full window split-pane layout
+
+## How It Works
+
+### CLI Tool Process
+
+The tool follows a simple three-step process:
+
+1. **Read**: Reads the Markdown file from the specified path
 ```
 md_to_site/
 ├── Cargo.toml              # Project dependencies and metadata
 ├── README.md               # This file
 ├── example.md              # Example Markdown file
+├── editor.css              # Live editor styling
 ├── public/                 # Output directory for generated HTML
 │   ├── default.html        # Generated HTML file
 │   └── style.css           # Theme CSS file (copied automatically)
@@ -95,8 +135,16 @@ md_to_site/
 │       ├── template.html
 │       └── style.css
 └── src/
-    ├── main.rs             # Entry point and CLI configuration
+    ├── lib.rs              # Library entry point
+    ├── main.rs             # CLI tool entry point
+    ├── bin/
+    │   └── editor.rs       # Live editor application
     └── mods/
+        ├── mod.rs          # Module declarations
+        ├── file_manager.rs # File I/O and Markdown conversion
+        ├── html_generator.rs # Template rendering
+        └── theme_manager.rs  # Theme loading and management
+``` └── mods/
         ├── mod.rs          # Module declarations
         ├── file_manager.rs # File I/O and Markdown conversion
         ├── html_generator.rs # Template rendering
@@ -136,24 +184,41 @@ Each theme includes:
 - Responsive design with mobile support
 - Proper typography and spacing
 - Syntax-highlighted code blocks
-- Styled headings, lists, blockquotes, and links
+## Dependencies
 
-### Custom Templates
+### Core Dependencies
+- **clap** (4.5): Command-line argument parsing
+- **pulldown-cmark** (0.11): CommonMark-compliant Markdown parser
+- **tera** (1.20): Template engine for HTML generation
+- **anyhow** (1.0): Error handling
+- **log** (0.4) & **env_logger** (0.10): Logging capabilities
 
-You can also create your own templates using Tera syntax. Templates should include:
-- `{{ title }}` placeholder for the page title
-- `{{ content }}` placeholder for the rendered Markdown content
+### Live Editor Dependencies
+- **dioxus** (0.5): Desktop GUI framework with reactive state management
+- **dioxus-desktop** (0.5): Desktop window and WebView support
+
+## CLI Output
+
+The CLI tool generates:
+1. **HTML file** (`default.html`): Contains your converted Markdown with proper HTML5 structure
+2. **CSS file** (`style.css`): Automatically copied from the selected theme
+Command-line converter for batch processing and scripting
+
+### 2. `editor` (Live Editor)
+Desktop application with real-time preview and theme switchingnt
 - A `<link>` tag to reference the CSS file
 
 ## Dependencies
 
-- **clap** (4.0): Command-line argument parsing
-- **pulldown-cmark** (0.9): CommonMark-compliant Markdown parser
-- **tera** (1.19): Template engine for HTML generation
-- **anyhow** (1.0): Error handling
-- **log** (0.4) & **env_logger** (0.10): Logging capabilities
+## Use Cases
 
-## Output
+- 📚 Generate documentation sites from Markdown files
+- 📝 Convert README files to HTML pages
+- 🌐 Create simple static websites
+- 📖 Build personal blogs or knowledge bases
+- 🎓 Generate course materials or tutorials
+- ✍️ Write and preview Markdown content in real-time
+- 🎨 Test different themes before exporting
 
 The tool generates:
 1. **HTML file** (`default.html`): Contains your converted Markdown with proper HTML5 structure

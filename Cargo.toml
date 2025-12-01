@@ -3,17 +3,32 @@ name = "md_to_site"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "md_to_site"
+path = "src/main.rs"
+
+[[bin]]
+name = "editor"
+path = "src/bin/editor.rs"
+
 [dependencies]
 # CLI
-clap = { version = "4.0", features = ["derive"] }
+clap = { version = "4.5", features = ["derive"] }
 
 # Markdown Parsing
-pulldown-cmark = "0.9"
+pulldown-cmark = "0.11"
 
 # Templating
-tera = "1.19"
+tera = "1.20"
 
 # Error Handling & Utilities
 anyhow = "1.0"
 log = "0.4"
 env_logger = "0.10"
+
+# New dependencies for editor
+dioxus = { version = "0.5", features = ["desktop"] }
+dioxus-desktop = { version = "0.5", features = ["default"] }
+
+# Optional: for file watching (CSS/theme hot reload)
+notify = "6.0"
